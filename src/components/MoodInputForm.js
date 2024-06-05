@@ -3,7 +3,7 @@ import '../styles/main.css';
 
 const moods = ['Happy', 'Sad', 'Excited', 'Angry'];
 
-function MoodInputForm({ onSelectMood }) {
+function MoodInputForm({ onSelectMood, counters }) {
   const handleButtonClick = (mood) => {
     onSelectMood(mood);
   };
@@ -12,7 +12,7 @@ function MoodInputForm({ onSelectMood }) {
     <div className="mood-buttons">
       {moods.map((mood) => (
         <button key={mood} onClick={() => handleButtonClick(mood)}>
-          {mood}
+          {mood} ({counters[mood]})
         </button>
       ))}
     </div>

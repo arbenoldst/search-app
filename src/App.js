@@ -5,9 +5,10 @@ import { fetchQuote } from './services/OpenAIService';
 import './styles/main.css';
 
 function App() {
-  const [quote, setQuote] = useState('');
+  const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
+  const [counters, setCounters] = useState({ Happy: 0, Sad: 0, Excited: 0, Angry: 0 });
 
   const handleSelectMood = async (mood) => {
     setLoading(true);
@@ -20,6 +21,11 @@ function App() {
     } finally {
       setLoading(false);
     }
+
+    setCounters((prevCounters) => ({
+      ...prevCounters,
+      [mood]: prevCounters[mood] + 1,
+    }));
   };
 
   return (
@@ -28,7 +34,7 @@ function App() {
         <h1>Good Day!</h1>
         <QuoteDisplay quote={quote} />
         <h2>How are you?</h2>
-        <MoodInputForm onSelectMood={handleSelectMood} />
+        <MoodInputForm onSelectMood={handleSelectMood}  counters={counters} />
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
